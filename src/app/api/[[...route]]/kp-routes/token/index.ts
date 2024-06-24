@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { zValidator } from "@hono/zod-validator";
 
 // ** import config
-import { env } from "@/config";
+import { config, env } from "@/config";
 
 // ** import validators
 import {
@@ -16,10 +16,9 @@ import {
 } from "@/validation/token";
 
 // ** import helpers
-import { generateAccessToken, generateRefreshToken } from "@/helpers/token";
+import { generateKPAccessToken, generateKPRefreshToken } from "@/helpers/token";
 
 export const token_api = new Hono();
-
 
 token_api.get("/", async (c) => {
   return c.json({
@@ -42,9 +41,9 @@ token_api.post("/", zValidator("json", TokenSchema), async (c) => {
       );
     }
 
-    const user_id = "some_user_id"; // Replace with actual user ID logic
-    const access_key = generateAccessToken(user_id);
-    const refresh_key = generateRefreshToken(user_id);
+    const instance_id = config.instance_id; // Replace with actual Instance ID logic
+    const access_key = generateKPAccessToken(instance_id);
+    const refresh_key = generateKPRefreshToken(instance_id);
 
     return c.json({
       access_key,
@@ -77,7 +76,7 @@ token_api.post(
           throw new Error("Invalid token type");
         }
 
-        const access_key = generateAccessToken(payload.user_id);
+        const access_key = generateKPAccessToken(payload.instance_id);
 
         return c.json({
           access_key,

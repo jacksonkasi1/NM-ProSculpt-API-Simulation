@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { zValidator } from "@hono/zod-validator";
 
 // ** import config
-import { env } from "@/config";
+import { config, env } from "@/config";
 
 // ** import validators
 import {
@@ -41,7 +41,7 @@ token_api.post("/", zValidator("json", TokenSchema), async (c) => {
       );
     }
 
-    const user_id = "some_user_id"; // Replace with actual user ID logic
+    const user_id = config.user_id; // Replace with actual user ID logic
     const access_key = generateAccessToken(user_id);
     const refresh_key = generateRefreshToken(user_id);
 
