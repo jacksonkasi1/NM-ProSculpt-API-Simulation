@@ -12,7 +12,7 @@ import { authMiddleware } from "@/middleware/auth";
 
 export const courses_api = new Hono();
 
-// courses_api.use("/*", authMiddleware);
+courses_api.use("/*", authMiddleware);
 
 // courses_api.get("/", async (c) => {
 //   return c.json({
@@ -38,7 +38,7 @@ const mockCourses = [
   // Inactive and not approved courses
   { name: "Swift Programming", course_id: "TEST0001", course_status: false, approval_status: false },
   { name: "Ruby on Rails", course_id: "TEST0002", course_status: false, approval_status: false },
-  
+
   // Mixed cases
   { name: "React Native", course_id: "TEST0003", course_status: true, approval_status: true },
   { name: "Angular Development", course_id: "TEST0004", course_status: false, approval_status: false },
