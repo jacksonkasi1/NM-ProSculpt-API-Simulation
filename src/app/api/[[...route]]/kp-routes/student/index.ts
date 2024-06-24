@@ -7,10 +7,10 @@ import { zValidator } from "@hono/zod-validator";
 // ** import validators
 import { ProgressSchema, ProgressRequest } from "@/validation/progress";
 
-const nm_api = new Hono();
+export const nm_api = new Hono();
 
 nm_api.post(
-  "/nm/api/student/progress",
+  "/progress",
   zValidator("json", ProgressSchema),
   async (c) => {
     try {
@@ -59,4 +59,3 @@ nm_api.post(
   },
 );
 
-export default nm_api;
