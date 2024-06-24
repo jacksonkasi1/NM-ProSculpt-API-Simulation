@@ -16,7 +16,6 @@ import { authMiddleware } from "@/utils/middleware/auth";
 
 export const course_api = new Hono();
 
-
 course_api.use("/*", authMiddleware);
 
 course_api.get("/", async (c) => {
@@ -30,10 +29,19 @@ course_api.post(
   zValidator("json", SubscribeSchema),
   async (c) => {
     try {
-      const data: SubscribeRequest = await c.req.valid("json");
+      const {
+        course_id,
+        user_id,
+        branch_name,
+        college_code,
+        college_name,
+        district,
+        student_name,
+        university,
+      }: SubscribeRequest = await c.req.valid("json");
 
       // Process the subscription
-      const subscription_reference_id = "2022/06/23/001"; // This should be generated dynamically on Moodle LMS
+      const subscription_reference_id = "uuid-xxxxx"; // This should be generated dynamically on Moodle LMS. Map course and user details to Moodle LMS
 
       // Assuming subscription process is successful
       return c.json({
@@ -49,7 +57,7 @@ course_api.post(
             message: "Validation error.",
             errors: error.errors,
           },
-          400,
+          400
         );
       }
 
@@ -59,10 +67,10 @@ course_api.post(
           message: "Error while subscribing to course.",
           data: error?.message! || error,
         },
-        500,
+        500
       );
     }
-  },
+  }
 );
 
 course_api.post("/access", zValidator("json", AccessSchema), async (c) => {
@@ -100,7 +108,7 @@ course_api.post("/access", zValidator("json", AccessSchema), async (c) => {
           message: "Validation error.",
           errors: error.errors,
         },
-        400,
+        400
       );
     }
 
@@ -110,7 +118,7 @@ course_api.post("/access", zValidator("json", AccessSchema), async (c) => {
         message: "Error while accessing course.",
         data: error.message,
       },
-      500,
+      500
     );
   }
 });
