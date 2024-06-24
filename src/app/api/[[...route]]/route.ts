@@ -4,6 +4,7 @@ import { handle } from "hono/vercel";
 
 // ** import routes
 import { kp_router } from "./kp-routes";
+import { nm_router } from "./nm-routes";
 
 const app = new Hono().basePath("/api");
 app.use("*", cors());
@@ -13,7 +14,7 @@ app.get("/", async (c) => {
 });
 
 app.route("/kp", kp_router);
-app.route("/kp", kp_router);
+app.route("/nm", nm_router);
 
 export const GET = handle(app);
 export const POST = handle(app);
