@@ -11,7 +11,19 @@ import { AccessRequest, AccessSchema } from "@/utils/validation/access";
 // ** import types
 import { SubscribeRequest } from "@/types/subscribe";
 
+// ** import middleware
+import { authMiddleware } from "@/utils/middleware/auth";
+
 export const course_api = new Hono();
+
+
+course_api.use("/*", authMiddleware);
+
+course_api.get("/", async (c) => {
+  return c.json({
+    message: " Welcome to the knowledge partner course API.",
+  });
+});
 
 course_api.post(
   "/subscribe",
@@ -40,7 +52,7 @@ course_api.post(
           400,
         );
       }
-      
+
       return c.json(
         {
           subscription_registration_status: false,

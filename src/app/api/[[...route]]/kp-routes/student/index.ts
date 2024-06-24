@@ -7,9 +7,15 @@ import { zValidator } from "@hono/zod-validator";
 // ** import validators
 import { ProgressSchema, ProgressRequest } from "@/validation/progress";
 
-export const nm_api = new Hono();
+// ** import middleware
+import { authMiddleware } from "@/utils/middleware/auth";
 
-nm_api.post(
+export const student_api = new Hono();
+
+
+student_api.use("/*", authMiddleware);
+
+student_api.post(
   "/progress",
   zValidator("json", ProgressSchema),
   async (c) => {

@@ -1,7 +1,7 @@
 const Home = () => {
   return (
     <div>
-      <h1>Text to Speech</h1>
+      <h1>ProSculpt</h1>
 
     </div>
   );
