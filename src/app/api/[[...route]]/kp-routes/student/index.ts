@@ -15,6 +15,13 @@ export const student_api = new Hono();
 
 student_api.use("/*", authMiddleware);
 
+
+student_api.get("/", async (c) => {
+  return c.json({
+    message: " Welcome to the knowledge partner student API.",
+  });
+});
+
 student_api.post(
   "/progress",
   zValidator("json", ProgressSchema),

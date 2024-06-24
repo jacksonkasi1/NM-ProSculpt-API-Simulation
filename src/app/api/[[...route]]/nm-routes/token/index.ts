@@ -18,8 +18,13 @@ import {
 // ** import helpers
 import { generateAccessToken, generateRefreshToken } from "@/helpers/token";
 
-
 export const token_api = new Hono();
+
+token_api.get("/", async (c) => {
+  return c.json({
+    message: " Welcome to the naan mudhalvan token API.",
+  });
+});
 
 // Token retrieval endpoint
 token_api.post("/", zValidator("json", TokenSchema), async (c) => {

@@ -15,21 +15,17 @@ import {
   RefreshTokenRequest,
 } from "@/validation/token";
 
+// ** import helpers
+import { generateAccessToken, generateRefreshToken } from "@/helpers/token";
 
 export const token_api = new Hono();
 
-// Helper functions to generate tokens
-const generateAccessToken = (user_id: string) => {
-  return jwt.sign({ user_id, token_type: "access" }, env.CLIENT_SECRET, {
-    expiresIn: "1h",
-  });
-};
 
-const generateRefreshToken = (user_id: string) => {
-  return jwt.sign({ user_id, token_type: "refresh" }, env.CLIENT_SECRET, {
-    expiresIn: "1d",
+token_api.get("/", async (c) => {
+  return c.json({
+    message: " Welcome to the knowledge partner token API.",
   });
-};
+});
 
 // Token retrieval endpoint
 token_api.post("/", zValidator("json", TokenSchema), async (c) => {
