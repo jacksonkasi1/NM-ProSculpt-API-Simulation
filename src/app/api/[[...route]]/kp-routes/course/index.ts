@@ -33,7 +33,7 @@ course_api.post(
       const data: SubscribeRequest = await c.req.valid("json");
 
       // Process the subscription
-      const subscription_reference_id = "123HJssjggI"; // This should be generated dynamically
+      const subscription_reference_id = "2022/06/23/001"; // This should be generated dynamically on Moodle LMS
 
       // Assuming subscription process is successful
       return c.json({
@@ -83,7 +83,7 @@ course_api.post("/access", zValidator("json", AccessSchema), async (c) => {
 
     // Simulate the access URL generation process
     const access_url =
-      "https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044"; // This should be generated dynamically
+      "https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044"; // This should be generated dynamically on Moodle LMS
 
     // Assuming the access process is successful
     return c.json({

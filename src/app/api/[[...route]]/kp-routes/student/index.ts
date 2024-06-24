@@ -32,7 +32,7 @@ student_api.post(
 
       const { user_id, course_id } = requestBody;
 
-      // Simulate fetching student progress information
+      // Simulate fetching student progress information (on Moodle LMS)
       const progress_percentage = "12.02";
       const certificate_issued = "false";
       const assessment_status = "false";
