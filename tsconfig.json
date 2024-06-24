@@ -22,7 +22,8 @@
       "@/utils/*": ["./src/utils/*"],
       "@/lib/*": ["./src/utils/lib/*"],
       "@/validation/*": ["./src/utils/validation/*"],
-      "@/helpers/*": ["./src/utils/helpers/*"]
+      "@/helpers/*": ["./src/utils/helpers/*"],
+      "@/middleware/*": ["./src/utils/middleware/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

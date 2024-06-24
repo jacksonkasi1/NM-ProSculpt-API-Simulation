@@ -14,7 +14,7 @@ app.get("/", async (c) => {
 });
 
 app.route("/kp", kp_router);
-app.route("/nm", nm_router);
+app.route("/lms/client", nm_router);
 
 export const GET = handle(app);
 export const POST = handle(app);
