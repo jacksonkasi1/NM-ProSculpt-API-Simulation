@@ -12,11 +12,11 @@ import { AccessRequest, AccessSchema } from "@/utils/validation/access";
 import { SubscribeRequest } from "@/types/subscribe";
 
 // ** import middleware
-import { authMiddleware } from "@/utils/middleware/auth";
+import { kpAuthMiddleware } from "@/utils/middleware/kp-auth";
 
 export const course_api = new Hono();
 
-course_api.use("/*", authMiddleware);
+course_api.use("/*", kpAuthMiddleware);
 
 course_api.get("/", async (c) => {
   return c.json({
@@ -39,6 +39,8 @@ course_api.post(
         student_name,
         university,
       }: SubscribeRequest = await c.req.valid("json");
+
+      // #Todo: Call the Moodle API to subscribe to a course using the user ID and course ID along with the authorization token.
 
       // Process the subscription
       const subscription_reference_id = "uuid-xxxxx"; // This should be generated dynamically on Moodle LMS. Map course and user details to Moodle LMS
@@ -88,6 +90,8 @@ course_api.post("/access", zValidator("json", AccessSchema), async (c) => {
       district,
       university,
     } = requestBody;
+
+    // #Todo: Call the Moodle API to get course access using the user and course IDs along with the authorization token.
 
     // Simulate the access URL generation process
     const access_url =

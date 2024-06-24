@@ -8,13 +8,11 @@ import { zValidator } from "@hono/zod-validator";
 import { ProgressSchema, ProgressRequest } from "@/validation/progress";
 
 // ** import middleware
-import { authMiddleware } from "@/utils/middleware/auth";
+import { kpAuthMiddleware } from "@/utils/middleware/kp-auth";
 
 export const student_api = new Hono();
 
-
-student_api.use("/*", authMiddleware);
-
+student_api.use("/*", kpAuthMiddleware);
 
 student_api.get("/", async (c) => {
   return c.json({
@@ -22,53 +20,49 @@ student_api.get("/", async (c) => {
   });
 });
 
-student_api.post(
-  "/progress",
-  zValidator("json", ProgressSchema),
-  async (c) => {
-    try {
-      // Validate the request body
-      const requestBody: ProgressRequest = c.req.valid("json");
+student_api.post("/progress", zValidator("json", ProgressSchema), async (c) => {
+  try {
+    // Validate the request body
+    const requestBody: ProgressRequest = c.req.valid("json");
 
-      const { user_id, course_id } = requestBody;
+    const { user_id, course_id } = requestBody;
 
-      // Simulate fetching student progress information (on Moodle LMS)
-      const progress_percentage = "12.02";
-      const certificate_issued = "false";
-      const assessment_status = "false";
-      const course_complete = "false";
+    // #Todo: Call the Moodle API to get the progress using the student ID and course ID along with the authorization token.
 
-      // Assuming the process is successful
-      return c.json({
-        progress_percentage,
-        certificate_issued,
-        assessment_status,
-        course_complete,
-      });
+    // Simulate fetching student progress information (on Moodle LMS)
+    const progress_percentage = "12.02";
+    const certificate_issued = "false";
+    const assessment_status = "false";
+    const course_complete = "false";
 
-    } catch (error: any) {
-      console.error(`Error in - POST /nm/api/student/progress API: ${error}`);
+    // Assuming the process is successful
+    return c.json({
+      progress_percentage,
+      certificate_issued,
+      assessment_status,
+      course_complete,
+    });
+  } catch (error: any) {
+    console.error(`Error in - POST /nm/api/student/progress API: ${error}`);
 
-      if (error instanceof z.ZodError) {
-        return c.json(
-          {
-            progress_status: false,
-            message: "Validation error.",
-            errors: error.errors,
-          },
-          400,
-        );
-      }
-
+    if (error instanceof z.ZodError) {
       return c.json(
         {
           progress_status: false,
-          message: "Error while fetching student progress information.",
-          data: error.message,
+          message: "Validation error.",
+          errors: error.errors,
         },
-        500,
+        400
       );
     }
-  },
-);
 
+    return c.json(
+      {
+        progress_status: false,
+        message: "Error while fetching student progress information.",
+        data: error.message,
+      },
+      500
+    );
+  }
+});
